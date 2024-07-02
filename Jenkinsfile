@@ -1,10 +1,19 @@
 pipeline {
-    agent any
-
+    agent any 
     stages {
-        stage('Hello') {
+        stage('Build') { 
             steps {
-                sh 'docker image build -t jawad ."
+                // 
+            }
+        }
+        stage('Test') { 
+            steps {
+                // 
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                // 
             }
         }
     }
