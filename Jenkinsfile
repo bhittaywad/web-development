@@ -1,7 +1,8 @@
 pipeline {
     agent any
 
-    stages {
+    stages ('jenkins-job') {
+        echo "Hello world"
         stage('Hello') {
             steps {
                 echo 'Hello World'
