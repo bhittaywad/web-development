@@ -57,7 +57,7 @@ pipeline {
                 echo "testing the iamge"
             }
         }   
-        }
+        
         stage ('build-staging') {
             when {
                 expression {
@@ -88,13 +88,13 @@ pipeline {
                     BRANCH_NAME == 'jenkins-job'
                 }
             }
-                
+              steps {
+                echo 'deploy staging image'
+            }  
             }
             
-            steps {
-                echo 'deploy staging image'
-            }
-        }
+            
+        
 
       
         stage ('test-prod'){
@@ -107,7 +107,7 @@ pipeline {
                 echo "testing the iamge"
             }
         }   
-        }
+        // my name 
         stage ('build-prod') {
             when {
                 expression {
@@ -148,6 +148,6 @@ pipeline {
               echo "Pipeline failed"
           }
       }
-} 
+}
 
 
