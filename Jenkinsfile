@@ -1,21 +1,36 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Hello') {
+            when {
+                expression {
+                    BRANCH_NAME == "ahmad"
+                }
+            }
             steps {
-                // Define the steps to be executed in this stage
-                echo 'Hello world'
+                echo 'Hello World'
             }
         }
-        // You can define more stages here as needed
-    }
-    
-    // Optionally, define post actions, such as notifications or cleanup steps
-    post {
-        always {
-            // Actions to be performed after all stages are executed
-            echo 'Pipeline finished'
+        stage('build-image') {
+            steps {
+                echo "image has build successfully"
+            }
+        }
+
+        stage('push-image') {
+            steps {
+                echo "imgae pushed"
+            }
         }
     }
+  post {
+      success {
+          echo 'Pipeline seccess'
+      }
+      failure{
+          echo 'pipeline failed'
+      }
+  }  
+} 
 }
