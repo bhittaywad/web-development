@@ -48,12 +48,22 @@ pipeline {
 
 
         stage ('test-staging'){
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins-job'
+                }
+            }
             steps {
                 echo "testing the iamge"
             }
         }   
-        }
+        
         stage ('build-staging') {
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins-job'
+                }
+            }
         
             steps {
                 echo 'Build staging image'
@@ -61,18 +71,30 @@ pipeline {
         }
 
         stage ('push-staging') {
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins-job'
+                }
+            }
             
             steps {
                 echo 'push staging image'
             }
         }
 
-        stage ('deploy-staging') {
-            
-            steps {
-                echo 'deploy staging image'
+        stage ('deploy-staging')  {
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins-job'
+                }
             }
-        }
+              steps {
+                echo 'deploy staging image'
+            }  
+            }
+            
+            
+        
 
       
         stage ('test-prod'){
@@ -85,7 +107,7 @@ pipeline {
                 echo "testing the iamge"
             }
         }   
-        }
+        // my name 
         stage ('build-prod') {
             when {
                 expression {
@@ -118,5 +140,14 @@ pipeline {
             }
         }
     }
-} 
+      post{
+          success{
+              echo "Pipeline working fine"
+          }
+          failure{
+              echo "Pipeline failed"
+          }
+      }
+}
+
 
