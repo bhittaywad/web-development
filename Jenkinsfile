@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage(push image){
+        stage(push-image) {
             steps {
                 echo "imgae pushed"
             }
