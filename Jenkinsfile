@@ -1,10 +1,8 @@
 pipeline {
     agent any
-    environment{
-        JAWAD_SERVER = credentials('prod-server')
-    }
+
     stages {
-        stage('build-dev') {
+        stage('test-dev') {
             when {
                 expression {
                     BRANCH_NAME == 'ahmad'
@@ -12,10 +10,10 @@ pipeline {
             }
             
             steps {
-                echo "Hello World ${JAWAD_SERVER}"
+                echo 'Hello World'
             }
         }
-        stage('push-dev') {
+        stage('build-dev') {
             when {
                 expression {
                     BRANCH_NAME == 'ahmad'
@@ -37,13 +35,36 @@ pipeline {
             }
         }
 
-        
+        stage('push-dev') {
+            when {
+                expression {
+                    BRANCH_NAME== 'ahmad'
+                }
+            }
+            steps {
+                echo "pushing the iamge"
+            }
+        }
+
+
+        stage ('test-staging'){
+            when {
+                expression {
+                    BRANCH_NAME == 'jenkins-job'
+                }
+            }
+            steps {
+                echo "testing the iamge"
+            }
+        }   
+        }
         stage ('build-staging') {
             when {
                 expression {
                     BRANCH_NAME == 'jenkins-job'
                 }
             }
+        
             steps {
                 echo 'Build staging image'
             }
@@ -55,22 +76,38 @@ pipeline {
                     BRANCH_NAME == 'jenkins-job'
                 }
             }
+            
             steps {
                 echo 'push staging image'
             }
         }
 
-        stage ('deploy-staging') {
+        stage ('deploy-staging')  {
             when {
                 expression {
                     BRANCH_NAME == 'jenkins-job'
                 }
             }
+                
+            }
+            
             steps {
                 echo 'deploy staging image'
             }
         }
 
+      
+        stage ('test-prod'){
+          when {
+                expression {
+                    BRANCH_NAME== 'master'
+                }
+            }
+            steps {
+                echo "testing the iamge"
+            }
+        }   
+        }
         stage ('build-prod') {
             when {
                 expression {
@@ -78,7 +115,7 @@ pipeline {
                 }
             }
             steps {
-                echo "Build prod image ${JAWAD_SERVER}"
+                echo 'Build prod image'
             }
         }
 
@@ -103,13 +140,14 @@ pipeline {
             }
         }
     }
-  post {
-      success {
-          echo 'Pipeline seccess'
+      post{
+          success{
+              echo "Pipeline working fine"
+          }
+          failure{
+              echo "Pipeline failed"
+          }
       }
-      failure{
-          echo 'pipeline failed'
-      }
-  }  
 } 
+
 
