@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment{
+        JAWAD_SERVER = credentials('prod-server')
+    }
     stages {
         stage('build-dev') {
             when {
@@ -10,7 +12,7 @@ pipeline {
             }
             
             steps {
-                echo 'Hello World'
+                echo "Hello World ${JAWAD_SERVER}"
             }
         }
         stage('push-dev') {
