@@ -12,19 +12,17 @@ pipeline {
                 echo 'Hello World'
             }
         }
-        stage(build-image) {
+        stage('build-image') {
             steps {
                 echo "image has build successfully"
             }
         }
 
-        stage(push-image) {
+        stage('push-image') {
             steps {
                 echo "imgae pushed"
             }
         }
     }
-    post {
-        
-    }
+    
 }
