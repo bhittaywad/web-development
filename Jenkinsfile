@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('build-dev') {
+        stage('test-dev') {
             when {
                 expression {
                     BRANCH_NAME == 'ahmad'
@@ -13,7 +13,7 @@ pipeline {
                 echo 'Hello World'
             }
         }
-        stage('push-dev') {
+        stage('build-dev') {
             when {
                 expression {
                     BRANCH_NAME == 'ahmad'
@@ -35,40 +35,57 @@ pipeline {
             }
         }
 
-        
-        stage ('build-staging') {
+        stage('push-dev') {
             when {
                 expression {
-                    BRANCH_NAME == 'jenkins-job'
+                    BRANCH_NAME== 'ahmad'
                 }
             }
+            steps {
+                echo "pushing the iamge"
+            }
+        }
+
+
+        stage ('test-staging'){
+            steps {
+                echo "testing the iamge"
+            }
+        }   
+        }
+        stage ('build-staging') {
+        
             steps {
                 echo 'Build staging image'
             }
         }
 
         stage ('push-staging') {
-            when {
-                expression {
-                    BRANCH_NAME == 'jenkins-job'
-                }
-            }
+            
             steps {
                 echo 'push staging image'
             }
         }
 
         stage ('deploy-staging') {
-            when {
-                expression {
-                    BRANCH_NAME == 'jenkins-job'
-                }
-            }
+            
             steps {
                 echo 'deploy staging image'
             }
         }
 
+      
+        stage ('test-prod'){
+          when {
+                expression {
+                    BRANCH_NAME== 'master'
+                }
+            }
+            steps {
+                echo "testing the iamge"
+            }
+        }   
+        }
         stage ('build-prod') {
             when {
                 expression {
@@ -101,13 +118,5 @@ pipeline {
             }
         }
     }
-  post {
-      success {
-          echo 'Pipeline seccess'
-      }
-      failure{
-          echo 'pipeline failed'
-      }
-  }  
 } 
 
