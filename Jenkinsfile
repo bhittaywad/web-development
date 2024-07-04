@@ -78,7 +78,7 @@ pipeline {
                 }
             }
             steps {
-                echo 'Build prod image'
+                echo "Build prod image ${JAWAD_SERVER}"
             }
         }
 
