@@ -24,5 +24,13 @@ pipeline {
             }
         }
     }
-    
+  post {
+      success {
+          echo 'Pipeline seccess'
+      }
+      failure{
+          echo 'pipeline failed'
+      }
+  }  
+} 
 }
