@@ -107,7 +107,7 @@ pipeline {
                 echo "testing the iamge"
             }
         }   
-        }
+        
         stage ('build-prod') {
             when {
                 expression {
